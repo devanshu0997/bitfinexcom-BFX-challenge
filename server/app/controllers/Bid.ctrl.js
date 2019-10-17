@@ -23,8 +23,15 @@ class BidController {
       return Responder.operationFailed(res, 'Offer Not Found')
     }
 
-    sendBid(offer.client_id, offerId, () => {
-      Responder.created(res, { result: 'Bid Successful' })
+    sendBid(offer.client_id, offerId, (error, result) => {
+      if (error) {
+        logger.error(error)
+        return Responder.operationFailed(res, error)
+      }
+
+      logger.info(result)
+
+      Responder.created(res, { result })
     })
   }
 
