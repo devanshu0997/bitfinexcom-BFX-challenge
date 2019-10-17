@@ -109,7 +109,7 @@ I am using docker-compose for grape as well as P2P clients who are going to Crea
 ```
 make start-all
 ```
-This will start three grape containers as well as three P2P containers. Wait a few secconds so that all containers start properly.
+This will start three grape containers as well as three P2P containers. Wait a few seconds so that all containers start properly.
 
 1.  Import the postman collection from the repository.
 2.  Create a few offers from each client running on port [4000, 4001, 4002] by calling the **Create Offer** API.
@@ -123,7 +123,7 @@ Run
 ```
 make start-all
 ```
-This will start three grape containers as well as three P2P containers. Wait a few secconds so that all containers start properly.
+This will start three grape containers as well as three P2P containers. Wait a few seconds so that all containers start properly.
 
 Api for `server-01` runs on port 4000, `server-02` runs on port 4001, `server-03` runs on port 4002.
 
