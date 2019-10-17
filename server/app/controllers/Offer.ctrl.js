@@ -4,6 +4,7 @@ const Offer = require('../models/Offer')
 const OfferKey = require('../models/OfferKey')
 const Responder = require('../../lib/expressResponder')
 const OffersList = require('../services/OffersList')
+const OffersKeyList = require('../services/OffersKeyList')
 
 class OfferController {
   list(req, res) {
@@ -14,7 +15,7 @@ class OfferController {
   get(req, res) {
     const offer = OffersList.getOffer(req.params.offerId)
     if(!offer) {
-      Responder.operationFailed(res, 'Offer Not Found')
+      return Responder.operationFailed(res, 'Offer Not Found')
     }
     Responder.success(res, offer)
   }
@@ -31,6 +32,13 @@ class OfferController {
     const keys = ed.createKeyPair(ed.createSeed())
 
     const offerKey = new OfferKey({ offer_id: offer.id, keys })
+
+    OffersKeyList.addKey(offerKey)
+
+    // Add Code to Push to DHT
+    // Announce to other Grapes
+
+    Responder.success(res, offer)
   }
 }
 
