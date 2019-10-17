@@ -4,7 +4,7 @@ const { PeerRPCServer } = require('grenache-nodejs-http')
 const config = require('./config/app')
 
 const link = new Link({
-  grape: config.get('link.grape.address')
+  grape: config.get('link.grape.aph.address')
 })
 link.start()
 
