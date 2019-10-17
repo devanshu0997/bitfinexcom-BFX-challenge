@@ -106,13 +106,55 @@ I am using docker-compose for grape as well as P2P clients who are going to Crea
 
 # Testing implementation
 
+```
+make start-all
+```
+This will start three grape containers as well as three P2P containers. Wait a few seconds so that all containers start properly.
+
 1.  Import the postman collection from the repository.
 2.  Create a few offers from each client running on port [4000, 4001, 4002] by calling the **Create Offer** API.
 3.  Check the list of offers from any of the client by calling in the **List Offers** API.
 4.  Place a bid to any of the offers from any of the by offer_id by calling **Bid** API
 5.  Again check the list of offers from any of the clients by calling in the **List Offers** API.
 
+# Quick commands to test
 
+Run
+```
+make start-all
+```
+This will start three grape containers as well as three P2P containers. Wait a few seconds so that all containers start properly.
+
+Api for `server-01` runs on port 4000, `server-02` runs on port 4001, `server-03` runs on port 4002.
+
+
+Server Ports:
+- Server-01: 4000
+- Server-02: 4001
+- Server-03: 4002
+
+1. Create an offer to buy 100 BTC for 8000$ each [on Server-01]
+curl -X POST \
+  http://127.0.0.1:4000/offers \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -d '{
+    "btc_quantity": 100,
+    "offer_price":  8000
+  }'
+
+2. Get list of all available offers [on Server-01]
+curl -X GET \
+  http://127.0.0.1:4001/offers
+
+3. Create Bid on Offer With Offer Id (8ef7da57-5e9a-4c67-8b3d-b9581ace38d9) [from Server-03]
+Offer Id is obtained by fetching list of all available offers
+curl -X POST \
+  http://127.0.0.1:4002/bids \
+  -H 'content-type: application/json' \
+  -d '{
+    "offer_id": "71e456d2-5813-4f2d-83a1-d8ef30c346b9"
+  }'
 
 # Things Missing in code
 

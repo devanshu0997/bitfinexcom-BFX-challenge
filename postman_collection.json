@@ -1,0 +1,65 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Bitfinix",
+		"_postman_id": "4e1c6ab8-ecee-eed3-9760-365a2a3ff70b",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Offer",
+			"request": {
+				"url": "http://127.0.0.1:4000/offers",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"btc_quantity\": 1000,\n\t\"offer_price\":  100\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "List Offers",
+			"request": {
+				"url": "http://127.0.0.1:4000/offers",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Bid",
+			"request": {
+				"url": "http://127.0.0.1:4000/bids",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"offer_id\": \"348222a7-e6db-40d4-99f8-299348f16958\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

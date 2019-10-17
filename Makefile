@@ -108,12 +108,9 @@ build-all-docker-images:
 	@docker-compose build --force-rm
 
 setup-network:
-	@docker-compose up --build -d grape-01 grape-02 grape-03
+	@docker-compose up -f grape-01 grape-02 grape-03
 
 start-server:
-	@docker-compose up --build -d server-01
+	@docker-compose up -f server-01 server-02 server-03
 
-start-client:
-	@docker-compose up --build -d client
-
-start-all: setup-network start-server start-client
+start-all: setup-network start-server

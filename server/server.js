@@ -2,6 +2,7 @@ const { PeerRPCServer } = require('grenache-nodejs-http')
 const config = require('./config/app')
 const link = require('./app/util/link')
 const app = require('./lib')
+const logger = require('./lib/logger')
 const grape = require('./app/util/grape')
 const announcementHandler = require('./app/util/announcementHandler')
 const BidController = require('./app/controllers/Bid.ctrl')
@@ -20,9 +21,9 @@ setInterval(function () {
 
 service.on('request', (rid, key, payload, handler) => {
   switch (payload.type) {
-  case 'bid':
-    BidController.process(payload, handler)
-    break
+    case 'bid':
+      BidController.process(payload, handler)
+      break
   }
 })
 
@@ -31,8 +32,15 @@ grape.on('announce', announcementHandler)
 
 app.start(config.get('app.expressport'))
   .then(message => {
-    app.logger.info(message)
+    logger.info(message)
   })
   .catch(error => {
-    app.logger.error(error)
+    logger.error(error)
   })
+
+function exitHandler() {
+  process.exit(0)
+}
+
+//catches uncaught exceptions
+process.on('uncaughtException', exitHandler);

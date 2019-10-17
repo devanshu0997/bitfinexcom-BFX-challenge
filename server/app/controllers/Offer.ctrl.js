@@ -1,6 +1,6 @@
 const _ = require('lodash')
 const uuidv4 = require('uuid/v4')
-const app = require('./../../lib')
+const logger = require('./../../lib/logger')
 const ed = require('ed25519-supercop')
 const Offer = require('../models/Offer')
 const config = require('../../config/app')
@@ -49,9 +49,9 @@ class OfferController {
 
       OffersKeyList.addKey(offerKey)
 
-      app.logger.info('An Order has been added to DHT!')
-      app.logger.info(`Order Id: ${offer.id}, DHT Hash: ${hash}`)
-      app.logger.info('Announcing in Network about new Order')
+      logger.info('An Order has been added to DHT!')
+      logger.info(`Order Id: ${offer.id}, DHT Hash: ${hash}`)
+      logger.info('Announcing in Network about new Order')
 
       announce(`ADD_OFFER:${hash}`, () => { })
 
