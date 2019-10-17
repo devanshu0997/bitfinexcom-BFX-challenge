@@ -1,11 +1,13 @@
+const uuidv4 = require('uuid/v4')
 const convict = require('convict')
+const logger = require('../lib/logger')
 
 const config = convict({
   app: {
     name: {
       doc: 'Name of the service',
       format: String,
-      default: 'grenache-server',
+      default: `P2P_CLIENT:${uuidv4()}`,
       env: 'APP_NAME'
     },
     port: {
@@ -13,6 +15,12 @@ const config = convict({
       format: 'port',
       default: 8081,
       env: 'APP_PORT'
+    },
+    expressport: {
+      doc: 'The express port to bind.',
+      format: 'port',
+      default: 3000,
+      env: 'EXPRESS_PORT'
     }
   },
 
@@ -24,7 +32,7 @@ const config = convict({
           format: String,
           default: 'http://127.0.0.1:30001',
           env: 'GRAPE_ADDRESS'
-        },
+        }
       },
       dht: {
         host: {
@@ -87,7 +95,7 @@ const config = convict({
   }
 })
 
-console.log('Starting service with', config.toString())
+logger.info('Starting service with', config.toString())
 
 config.validate({ allowed: 'strict' })
 

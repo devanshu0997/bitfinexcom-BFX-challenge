@@ -1,17 +1,19 @@
-class OfferKeyList {
-  constructor(){
+class OffersKeyList {
+  constructor () {
     this.keys = {}
   }
 
-  getKey(offerId) {
+  getKey (offerId) {
     return this.keys[offerId]
   }
 
-  addKey(offerKey) {
-    this.keys[offerKey.offer_id] = offerKey.keys
+  addKey (offerKey) {
+    this.keys[offerKey.offer_id] = offerKey
   }
 
-  removeKey(offerId) {
+  removeKey (offerId) {
     delete this.keys[offerId]
   }
 }
+
+module.exports = new OffersKeyList()

@@ -52,10 +52,10 @@ services:
       - 9229:9229
     env_file:
       - ./envs/server-01.env
-    depends_on:
-      - grape-01
-      - grape-02
-      - grape-03
+    # depends_on:
+    #   - grape-01
+    #   - grape-02
+    #   - grape-03
 
   server-02:
     build:
@@ -72,7 +72,7 @@ services:
       - 9230:9229
     env_file:
       - ./envs/server-02.env
-    depends_on:
-      - grape-01
-      - grape-02
-      - grape-03
+    # depends_on:
+    #   - grape-01
+    #   - grape-02
+    #   - grape-03
