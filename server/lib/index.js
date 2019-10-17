@@ -1,5 +1,6 @@
 const http = require('http')
 const express = require('./express')
+const logger = require('./logger')
 
 async function start (port) {
   const app = express.init()
@@ -9,4 +10,4 @@ async function start (port) {
   return `Server started at http://localhost:${port}.`
 }
 
-module.exports = { start }
+module.exports = { start, logger }

@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const uuidv4 = require('uuid/v4')
 const ed = require('ed25519-supercop')
 const Offer = require('../models/Offer')
@@ -12,7 +13,7 @@ const config = require('../../config/app')
 class OfferController {
   list (req, res) {
     const offers = OffersList.getOffersList()
-    Responder.success(res, offers)
+    Responder.success(res, _.values(offers))
   }
 
   get (req, res) {
