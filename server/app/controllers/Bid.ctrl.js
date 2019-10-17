@@ -1,18 +1,18 @@
 const _ = require('lodash')
+const app = require('./../../lib')
+const link = require('../util/link')
+const Offer = require('./../models/Offer')
+const { announce } = require('./../util/announce')
 const sendBid = require('../services/p2p/SendBid')
 const OffersList = require('../services/OffersList')
 const Responder = require('../../lib/expressResponder')
-const { putMutable } = require('./../services/dht/AddUpdateObject')
-const { announce } = require('./../util/announce')
-const Offer = require('./../models/Offer')
 const OffersKeyList = require('./../services/OffersKeyList')
-const link = require('../util/link')
-const app = require('./../../lib')
+const { putMutable } = require('./../services/dht/AddUpdateObject')
 
 class BidController {
   create (req, res) {
     if (!req.body.offer_id) {
-      Responder.operationFailed(res, 'Offer Id Required for placing a bid')
+      return Responder.operationFailed(res, 'Offer Id Required for placing a bid')
     }
 
     const offerId = req.body.offer_id
@@ -24,7 +24,7 @@ class BidController {
     }
 
     sendBid(offer.client_id, offerId, () => {
-      Responder.success(res, { result: 'Bid Successful' })
+      Responder.created(res, { result: 'Bid Successful' })
     })
   }
 
@@ -39,8 +39,8 @@ class BidController {
       return handler.reply(new Error('Offer Not Found or Already Processed!'))
     }
 
-    link.get(keys.hash, (err, res) => {
-      if (err) {
+    link.get(keys.hash, (error, res) => {
+      if (error) {
         return handler.reply(new Error('Offer Not Found or Already Processed!'))
       }
 
@@ -52,15 +52,15 @@ class BidController {
 
       const opts = _.pick(keys, 'keys')
 
-      putMutable({ seq: offer.sequence, v: JSON.stringify(offer) }, opts, (err, hash) => {
-        if (err) {
+      putMutable({ seq: offer.sequence, v: JSON.stringify(offer) }, opts, (error, hash) => {
+        if (error) {
           return handler.reply(new Error('Offer Not Found or Already Processed!'))
         }
 
         OffersKeyList.removeKey(payload.offer_id)
 
         app.logger.info('An Order Processed Successfully!')
-        app.logger.info(`Order Id: ${offer.id}, DLT Hash: ${hash}`)
+        app.logger.info(`Order Id: ${offer.id}, DHT Hash: ${hash}`)
         app.logger.info('Announcing in Network about successful bid')
 
         announce(`REMOVE_OFFER:${hash}`, () => { })

@@ -1,16 +1,18 @@
 const _ = require('lodash')
 const uuidv4 = require('uuid/v4')
+const app = require('./../../lib')
 const ed = require('ed25519-supercop')
 const Offer = require('../models/Offer')
+const config = require('../../config/app')
 const OfferKey = require('../models/OfferKey')
-const Responder = require('../../lib/expressResponder')
+const { announce } = require('../util/announce')
 const OffersList = require('../services/OffersList')
+const Responder = require('../../lib/expressResponder')
 const OffersKeyList = require('../services/OffersKeyList')
 const { putMutable } = require('../services/dht/AddUpdateObject')
-const { announce } = require('../util/announce')
-const config = require('../../config/app')
 
 class OfferController {
+  // TODO: Pagination
   list (req, res) {
     const offers = OffersList.getOffersList()
     Responder.success(res, _.values(offers))
@@ -24,6 +26,7 @@ class OfferController {
     Responder.success(res, offer)
   }
 
+  // TODO: Validation for Request Input
   create (req, res) {
     const { btc_quantity, offer_price } = req.body
     const offer = new Offer({
@@ -38,17 +41,22 @@ class OfferController {
     const keys = ed.createKeyPair(ed.createSeed())
     const opts = { keys }
 
-    putMutable({ seq: offer.sequence, v: JSON.stringify(offer) }, opts, (err, hash) => {
+    putMutable({ seq: offer.sequence, v: JSON.stringify(offer) }, opts, (error, hash) => {
+      if (error) {
+        return Responder.operationFailed(res, 'Error in Broadcasting the Offer')
+      }
       const offerKey = new OfferKey({ offer_id: offer.id, keys, hash })
 
       OffersKeyList.addKey(offerKey)
-      console.log('data saved to the DHT', err, hash)
-      if (hash) {
-        announce(`ADD_OFFER:${hash}`, () => { })
-      }
-    })
 
-    Responder.success(res, offer)
+      app.logger.info('An Order has been added to DHT!')
+      app.logger.info(`Order Id: ${offer.id}, DHT Hash: ${hash}`)
+      app.logger.info('Announcing in Network about new Order')
+
+      announce(`ADD_OFFER:${hash}`, () => { })
+
+      Responder.success(res, offer)
+    })
   }
 }
 

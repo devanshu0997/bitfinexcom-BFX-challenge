@@ -3,7 +3,7 @@ const config = require('./config/app')
 const link = require('./app/util/link')
 const app = require('./lib')
 const grape = require('./app/util/grape')
-const addOffer = require('./app/util/announcementHandler')
+const announcementHandler = require('./app/util/announcementHandler')
 const BidController = require('./app/controllers/Bid.ctrl')
 
 const peer = new PeerRPCServer(link, {
@@ -19,7 +19,6 @@ setInterval(function () {
 }, 1000)
 
 service.on('request', (rid, key, payload, handler) => {
-  console.log('Revied req from client', payload)
   switch (payload.type) {
   case 'bid':
     BidController.process(payload, handler)
@@ -28,7 +27,7 @@ service.on('request', (rid, key, payload, handler) => {
 })
 
 // Add handlers listening for announcements
-grape.on('announce', addOffer)
+grape.on('announce', announcementHandler)
 
 app.start(config.get('app.expressport'))
   .then(message => {

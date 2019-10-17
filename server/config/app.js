@@ -1,5 +1,6 @@
-const convict = require('convict')
 const uuidv4 = require('uuid/v4')
+const convict = require('convict')
+const logger = require('../lib/logger')
 
 const config = convict({
   app: {
@@ -94,7 +95,7 @@ const config = convict({
   }
 })
 
-console.log('Starting service with', config.toString())
+logger.info('Starting service with', config.toString())
 
 config.validate({ allowed: 'strict' })
 

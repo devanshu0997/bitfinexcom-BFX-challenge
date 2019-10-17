@@ -1,4 +1,5 @@
 const _ = require('lodash')
+const logger = require('./logger')
 
 function Responder () {}
 
@@ -13,7 +14,7 @@ function sendResponse (res, status, body) {
 
     return res.status(status).send()
   } else {
-    console.log('Response already sent.')
+    logger.error('Response already sent.')
   }
 }
 
@@ -41,7 +42,7 @@ Responder.notFound = (req, res) => {
 Responder.operationFailed = (res, reason) => {
   const status = reason.status
   reason = reason.message || reason
-  console.log(reason)
+  logger.error(reason)
   return sendResponse(res, status || 400, { reason })
 }
 

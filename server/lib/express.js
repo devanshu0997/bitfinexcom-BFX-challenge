@@ -4,6 +4,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 
+const logger = require('./logger')
 const initRoutes = require('../app/routes')
 const Responder = require('./expressResponder')
 
@@ -16,7 +17,7 @@ function initMiddleware () {
 
   app.use(bodyParser.json({ limit: '50mb' }))
 
-  app.use(morgan('combined', console.log))
+  app.use(morgan('combined', logger.info))
 }
 
 function initPingURL () {
