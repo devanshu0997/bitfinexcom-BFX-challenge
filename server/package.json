@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint . --fix"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +27,12 @@
     "@babel/preset-env": "^7.6.3",
     "@babel/register": "^7.6.2",
     "babel-jest": "^24.9.0",
+    "eslint": "^6.5.1",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "jest": "^24.9.0",
     "nodemon": "^1.19.4"
   },

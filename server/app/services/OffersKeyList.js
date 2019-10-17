@@ -1,17 +1,17 @@
 class OffersKeyList {
-  constructor(){
+  constructor () {
     this.keys = {}
   }
 
-  getKey(offerId) {
+  getKey (offerId) {
     return this.keys[offerId]
   }
 
-  addKey(offerKey) {
+  addKey (offerKey) {
     this.keys[offerKey.offer_id] = offerKey
   }
 
-  removeKey(offerId) {
+  removeKey (offerId) {
     delete this.keys[offerId]
   }
 }

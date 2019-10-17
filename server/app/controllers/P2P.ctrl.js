@@ -1,5 +1,5 @@
 class P2P {
-  acceptBid(options) {
+  acceptBid (options) {
     // validate offer
     // if valid update in DHT
     // send announcement

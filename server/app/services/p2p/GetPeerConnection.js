@@ -1,4 +1,3 @@
-
 const { PeerRPCClient } = require('grenache-nodejs-http')
 const link = require('../../util/link')
 

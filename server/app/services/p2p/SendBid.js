@@ -10,7 +10,6 @@ const sendBid = (name, payload, callback) => {
       result
     )
   })
-
 }
 
 module.exports = sendBid

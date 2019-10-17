@@ -1,24 +1,23 @@
 class OffersList {
-  constructor(){
+  constructor () {
     this.offers = {}
   }
 
-  getOffersList() {
+  getOffersList () {
     return this.offers
   }
 
-  getOffer(offerId) {
+  getOffer (offerId) {
     return this.offers[offerId]
   }
 
-  addOffer(offer) {
+  addOffer (offer) {
     this.offers[offer.id] = offer
   }
 
-  removeOffer(offerId) {
+  removeOffer (offerId) {
     delete this.offers[offerId]
   }
-
 }
 
 module.exports = new OffersList()

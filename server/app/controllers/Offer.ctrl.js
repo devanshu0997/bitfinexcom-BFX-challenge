@@ -10,12 +10,12 @@ const { announce } = require('../util/announce')
 const config = require('../../config/app')
 
 class OfferController {
-  list(req, res) {
+  list (req, res) {
     const offers = OffersList.getOffersList()
     Responder.success(res, offers)
   }
 
-  get(req, res) {
+  get (req, res) {
     const offer = OffersList.getOffer(req.params.offerId)
     if (!offer) {
       return Responder.operationFailed(res, 'Offer Not Found')
@@ -23,7 +23,7 @@ class OfferController {
     Responder.success(res, offer)
   }
 
-  create(req, res) {
+  create (req, res) {
     const { btc_quantity, offer_price } = req.body
     const offer = new Offer({
       id: uuidv4(),

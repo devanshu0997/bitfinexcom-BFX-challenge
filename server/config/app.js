@@ -31,7 +31,7 @@ const config = convict({
           format: String,
           default: 'http://127.0.0.1:30001',
           env: 'GRAPE_ADDRESS'
-        },
+        }
       },
       dht: {
         host: {
