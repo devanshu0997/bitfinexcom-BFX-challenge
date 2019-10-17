@@ -18,11 +18,39 @@ const config = convict({
 
   link: {
     grape: {
-      address: {
-        doc: 'Link Grape Address',
-        format: String,
-        default: 'http://127.0.0.1:30001',
-        env: 'GRAPE_ADDRESS'
+      aph: {
+        address: {
+          doc: 'Link Grape Address',
+          format: String,
+          default: 'http://127.0.0.1:30001',
+          env: 'GRAPE_ADDRESS'
+        },
+      },
+      dht: {
+        host: {
+          doc: 'Grape DHT Host',
+          format: String,
+          default: '127.0.0.1',
+          env: 'GRAPE_DHT_HOST'
+        },
+        port: {
+          doc: 'Grape DHT Port',
+          format: 'port',
+          default: '20003',
+          env: 'GRAPE_DHT_PORT'
+        },
+        bootstrap: {
+          doc: 'Grape DHT Bootstrap',
+          format: String,
+          default: 'http://127.0.0.1:20001',
+          env: 'GRAPE_DHT_BOOTSTRAP_NODES'
+        },
+        api_port: {
+          doc: 'Grape API Port',
+          format: 'port',
+          default: '50001',
+          env: 'GRAPE_API_PORT'
+        }
       }
     },
     announce: {
