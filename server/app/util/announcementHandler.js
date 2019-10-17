@@ -4,7 +4,7 @@ const Offer = require('../models/Offer')
 const OffersList = require('../services/OffersList')
 
 const handler = (message) => {
-  logger.info('Detected an announment in Network')
+  logger.info('Detected an message in Network')
   logger.info(`message: ${message}`)
 
   if (message.startsWith('ADD_OFFER:')) {
