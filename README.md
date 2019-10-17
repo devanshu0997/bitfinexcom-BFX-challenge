@@ -106,11 +106,26 @@ I am using docker-compose for grape as well as P2P clients who are going to Crea
 
 # Testing implementation
 
+```
+make start-all
+```
+This will start three grape containers as well as three P2P containers. Wait a few secconds so that all containers start properly.
+
 1.  Import the postman collection from the repository.
 2.  Create a few offers from each client running on port [4000, 4001, 4002] by calling the **Create Offer** API.
 3.  Check the list of offers from any of the client by calling in the **List Offers** API.
 4.  Place a bid to any of the offers from any of the by offer_id by calling **Bid** API
 5.  Again check the list of offers from any of the clients by calling in the **List Offers** API.
+
+# Quick commands to test
+
+Run
+```
+make start-all
+```
+This will start three grape containers as well as three P2P containers. Wait a few secconds so that all containers start properly.
+
+Api for `server-01` runs on port 4000, `server-02` runs on port 4001, `server-03` runs on port 4002.
 
 
 
