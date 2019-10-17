@@ -13,6 +13,7 @@
     "convict": "^5.2.0",
     "ed25519-supercop": "^1.2.0",
     "grenache-grape": "^0.9.10",
+    "ed25519-supercop": "^1.2.0",
     "grenache-nodejs-http": "^0.7.8",
     "grenache-nodejs-link": "^0.7.10",
     "lodash": "^4.17.15"
