@@ -8,7 +8,7 @@ class OffersKeyList {
   }
 
   addKey(offerKey) {
-    this.keys[offerKey.offer_id] = offerKey.keys
+    this.keys[offerKey.offer_id] = offerKey
   }
 
   removeKey(offerId) {

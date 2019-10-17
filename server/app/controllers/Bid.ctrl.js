@@ -1,5 +1,6 @@
 const OffersList = require('../services/OffersList')
 const Responder = require('../../lib/expressResponder')
+const sendBid = require('../services/p2p/SendBid')
 
 class BidController {
   create(req, res) {
@@ -11,7 +12,8 @@ class BidController {
       return Responder.operationFailed(res, 'Offer Not Found')
     }
 
-    // Add code to send P2P request for bid
+
+    sendBid(offer.client_id, { type: 'bid', offer_id }, console.log )
 
     Responder.success(res, { result: 'Bid Successful' })
   }

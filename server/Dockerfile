@@ -10,7 +10,10 @@ RUN apk add --no-cache make bash
 ARG NODE_ENV=development
 ENV NODE_ENV $NODE_ENV
 
-COPY ./package*.json ./
+COPY ./package.json ./
+
+ARG NODE_ENV=development
+ENV NODE_ENV $NODE_ENV
 
 RUN npm install
 
