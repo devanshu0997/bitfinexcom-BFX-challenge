@@ -51,7 +51,7 @@ services:
     ports:
       - 9229:9229
     env_file:
-      - ./envs/server.env
+      - ./envs/server-01.env
     depends_on:
       - grape-01
       - grape-02
