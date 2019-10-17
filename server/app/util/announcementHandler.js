@@ -1,31 +1,40 @@
 const link = require('./link')
+const logger = require('./../../lib/logger')
 const Offer = require('../models/Offer')
 const OffersList = require('../services/OffersList')
 
-const handler = (message, _ih) => {
-  // console.log('Receieved announcement', message)
-  // [TODO] add offer in list and respond with ok
+const handler = (message) => {
+  logger.info('Detected an announment in Network')
+  logger.info(`message: ${message}`)
+
   if (message.startsWith('ADD_OFFER:')) {
-    console.log('Receieved offer', message)
-    link.get(message.replace('ADD_OFFER:', ''), (err, res) => {
-      console.log('data requested to the DHT', err, res)
+    const hash = message.replace('ADD_OFFER:', '')
+
+    link.get(hash, (error, res) => {
+      if (error) {
+        return logger.error('Error Occurred While Fetching New Offer.')
+      }
 
       const offerRaw = JSON.parse(res.v)
-      console.log(offerRaw, '*************')
-
       const offer = new Offer(offerRaw)
+
       OffersList.addOffer(offer)
+
+      logger.info('Add Offer Announcement. Local Bulletin Updated!')
     })
   } else if (message.startsWith('REMOVE_OFFER:')) {
-    link.get(message.replace('REMOVE_OFFER:', ''), (err, res) => {
-      console.log('data requested to the DHT', err, res)
+    const hash = message.replace('REMOVE_OFFER:', '')
+
+    link.get(hash, (error, res) => {
+      if (error) {
+        return logger.error('Error Occurred While Fetching Removed Offer.')
+      }
 
       const offerRaw = JSON.parse(res.v)
-      console.log(offerRaw, '*************')
-
       OffersList.removeOffer(offerRaw.id)
+
+      logger.info('Remove Offer Announcement. Local Bulletin Updated!')
     })
-    console.log('Receieved offer', message)
   }
 }
 
