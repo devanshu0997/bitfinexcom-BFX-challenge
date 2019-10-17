@@ -4,38 +4,53 @@ services:
   grape-01:
     build:
       context: network
-    command: ["./docker-entrypoint.sh", "grape --dp 20001 --aph 30001 --bn 'grape-02:20002,grape-03:20003'"]
+    command:
+      [
+        "sh",
+        "-c",
+        "grape --dp 20001 --aph 30001 --bn '127.0.0.1:20002,127.0.0.1:20003,127.0.0.1:20004,127.0.0.1:20005,127.0.0.1:20006'",
+      ]
     environment:
       DEBUG: "*"
     restart: always
     network_mode: host
     ports:
-     - 20001:20001
-     - 30001:30001
+      - 20001:20001
+      - 30001:30001
 
   grape-02:
     build:
       context: network
-    command: ["./docker-entrypoint.sh", "grape --dp 20002 --aph 40001 --bn 'grape-01:20001,grape-03:20003'"]
+    command:
+      [
+        "sh",
+        "-c",
+        "grape --dp 20002 --aph 40001 --bn '127.0.0.1:20001,127.0.0.1:20003,127.0.0.1:20004,127.0.0.1:20005,127.0.0.1:20006'",
+      ]
     environment:
       DEBUG: "*"
     restart: always
     network_mode: host
     ports:
-     - 20002:20002
-     - 40001:40001
+      - 20002:20002
+      - 40001:40001
 
   grape-03:
     build:
       context: network
-    command: ["./docker-entrypoint.sh", "grape --dp 20003 --aph 50001 --bn 'grape-01:20001,grape-02:20002'"]
+    command:
+      [
+        "sh",
+        "-c",
+        "grape --dp 20003 --aph 50001 --bn '127.0.0.1:20001,127.0.0.1:20002,127.0.0.1:20004,127.0.0.1:20005,127.0.0.1:20006'",
+      ]
     environment:
       DEBUG: "*"
     restart: always
     network_mode: host
     ports:
-     - 20003:20003
-     - 50001:50001
+      - 20003:20003
+      - 50001:50001
 
   server-01:
     build:
@@ -50,12 +65,10 @@ services:
       - ./server:/opt
     ports:
       - 9229:9229
+      - 20004:20004
+      - 50002:50002
     env_file:
       - ./envs/server-01.env
-    # depends_on:
-    #   - grape-01
-    #   - grape-02
-    #   - grape-03
 
   server-02:
     build:
@@ -70,9 +83,25 @@ services:
       - ./server:/opt
     ports:
       - 9230:9229
+      - 20005:20005
+      - 60001:60001
     env_file:
       - ./envs/server-02.env
-    # depends_on:
-    #   - grape-01
-    #   - grape-02
-    #   - grape-03
+
+  server-03:
+    build:
+      context: server
+      args:
+        - NODE_ENV=development
+    command: ["make", "dev_server"]
+    restart: always
+    network_mode: host
+    volumes:
+      - /opt/node_modules
+      - ./server:/opt
+    ports:
+      - 9231:9229
+      - 20006:20006
+      - 60002:60002
+    env_file:
+      - ./envs/server-03.env
