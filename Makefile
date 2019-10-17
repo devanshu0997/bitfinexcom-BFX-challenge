@@ -111,7 +111,7 @@ setup-network:
 	@docker-compose up --build -d grape-01 grape-02 grape-03
 
 start-server:
-	@docker-compose up --build -d server
+	@docker-compose up --build -d server-01
 
 start-client:
 	@docker-compose up --build -d client
