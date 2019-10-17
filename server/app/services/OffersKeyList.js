@@ -1,4 +1,4 @@
-class OfferKeyList {
+class OffersKeyList {
   constructor(){
     this.keys = {}
   }
@@ -15,3 +15,5 @@ class OfferKeyList {
     delete this.keys[offerId]
   }
 }
+
+module.exports = new OffersKeyList()

@@ -12,3 +12,5 @@ class Offer {
     this.offer_price = offer_price;
   }
 }
+
+module.exports = Offer

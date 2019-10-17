@@ -2,18 +2,25 @@ const uuidv4 = require('uuid/v4')
 const ed = require('ed25519-supercop')
 const Offer = require('../models/Offer')
 const OfferKey = require('../models/OfferKey')
+const Responder = require('../../lib/expressResponder')
+const OffersList = require('../services/OffersList')
 
-class Offer {
-  list(options) {
-    
+class OfferController {
+  list(req, res) {
+    const offers = OffersList.getOffersList()
+    Responder.success(res, offers)
   }
 
-  get(options) {
-
+  get(req, res) {
+    const offer = OffersList.getOffer(req.params.offerId)
+    if(!offer) {
+      Responder.operationFailed(res, 'Offer Not Found')
+    }
+    Responder.success(res, offer)
   }
 
-  create(offerRequest) {
-    const { btc_quantity, offer_price } = offerRequest
+  create(req, res) {
+    const { btc_quantity, offer_price } = req.body
     const offer = new Offer({
       id: uuidv4(),
       client_id: config.get('app.name'),
@@ -26,3 +33,5 @@ class Offer {
     const offerKey = new OfferKey({ offer_id: offer.id, keys })
   }
 }
+
+module.exports = new OfferController()

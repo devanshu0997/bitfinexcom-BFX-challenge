@@ -1,6 +1,10 @@
-class OfferList {
+class OffersList {
   constructor(){
     this.offers = {}
+  }
+
+  getOffersList() {
+    return this.offers
   }
 
   getOffer(offerId) {
@@ -16,3 +20,5 @@ class OfferList {
   }
 
 }
+
+module.exports = new OffersList()

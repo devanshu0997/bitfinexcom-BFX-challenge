@@ -8,3 +8,5 @@ class OfferKey {
     this.keys = keys;
   }
 }
+
+module.exports = OfferKey

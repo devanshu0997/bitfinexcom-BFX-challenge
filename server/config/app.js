@@ -13,6 +13,12 @@ const config = convict({
       format: 'port',
       default: 8081,
       env: 'APP_PORT'
+    },
+    expressport: {
+      doc: 'The express port to bind.',
+      format: 'port',
+      default: 3000,
+      env: 'EXPRESS_PORT'
     }
   },
 
