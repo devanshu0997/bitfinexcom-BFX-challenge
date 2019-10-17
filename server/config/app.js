@@ -1,11 +1,12 @@
 const convict = require('convict')
+const uuidv4 = require('uuid/v4')
 
 const config = convict({
   app: {
     name: {
       doc: 'Name of the service',
       format: String,
-      default: 'grenache-server',
+      default: `P2P_CLIENT:${uuidv4()}`,
       env: 'APP_NAME'
     },
     port: {

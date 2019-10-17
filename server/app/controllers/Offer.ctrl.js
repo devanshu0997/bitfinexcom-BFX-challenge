@@ -28,7 +28,7 @@ class OfferController {
       btc_quantity,
       offer_price
     })
-  
+
     const keys = ed.createKeyPair(ed.createSeed())
 
     const offerKey = new OfferKey({ offer_id: offer.id, keys })
