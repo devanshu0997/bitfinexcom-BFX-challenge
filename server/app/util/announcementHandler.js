@@ -1,11 +1,6 @@
-const sendBid = require('../services/p2p/SendBid')
 const link = require('./link')
 const Offer = require('../models/Offer')
 const OffersList = require('../services/OffersList')
-
-const getDocument = () => {
-
-}
 
 const handler = (message, _ih) => {
   // console.log('Receieved announcement', message)
@@ -32,10 +27,6 @@ const handler = (message, _ih) => {
     })
     console.log('Receieved offer', message)
   }
-
-  // else if (message.startsWith('ACCEPT_OFFER:')) {
-  // console.log('Receieved offer', message)
-  // }
 }
 
 module.exports = handler

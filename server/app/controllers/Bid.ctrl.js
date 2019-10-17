@@ -6,18 +6,24 @@ const { putMutable } = require('./../services/dht/AddUpdateObject')
 const { announce } = require('./../util/announce')
 const Offer = require('./../models/Offer')
 const OffersKeyList = require('./../services/OffersKeyList')
+const link = require('../util/link')
+const app = require('./../../lib')
 
 class BidController {
   create (req, res) {
-    const { offer_id } = req.body
+    if (!req.body.offer_id) {
+      Responder.operationFailed(res, 'Offer Id Required for placing a bid')
+    }
 
-    const offer = OffersList.getOffer(offer_id)
+    const offerId = req.body.offer_id
+
+    const offer = OffersList.getOffer(offerId)
 
     if (!offer) {
       return Responder.operationFailed(res, 'Offer Not Found')
     }
 
-    sendBid(offer.client_id, { type: 'bid', offer_id }, () => {
+    sendBid(offer.client_id, offerId, () => {
       Responder.success(res, { result: 'Bid Successful' })
     })
   }
@@ -53,9 +59,9 @@ class BidController {
 
         OffersKeyList.removeKey(payload.offer_id)
 
-        logger.info('An Order Processed Successfully!')
-        logger.info(`Order Id: ${offer.id}, DLT Hash: ${hash}`)
-        logger.info('Announcing in Network about successful bid')
+        app.logger.info('An Order Processed Successfully!')
+        app.logger.info(`Order Id: ${offer.id}, DLT Hash: ${hash}`)
+        app.logger.info('Announcing in Network about successful bid')
 
         announce(`REMOVE_OFFER:${hash}`, () => { })
 

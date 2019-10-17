@@ -1,14 +1,15 @@
 const peer = require('./GetPeerConnection')
+const app = require('./../../../lib')
 
-const sendBid = (name, payload, callback) => {
-  peer.request(name, payload, { timeout: 100000 }, (err, result) => {
-    if (err) return console.log(err)
-    console.log(
-      'Fibonacci number at place',
-      payload.number,
-      'in the sequence:',
-      result
-    )
+const sendBid = (clientId, offerId) => {
+  const payload = { type: 'bid', offer_id: offerId }
+  const opts = { timeout: 100000 }
+
+  peer.request(clientId, payload, opts, (error, result) => {
+    if (error) {
+      return app.logger.error(error)
+    }
+    app.logger.info(result)
   })
 }
 
