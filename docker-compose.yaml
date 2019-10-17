@@ -5,6 +5,8 @@ services:
     build:
       context: network
     command: ["./docker-entrypoint.sh", "grape --dp 20001 --aph 30001 --bn 'grape-02:20002,grape-03:20003'"]
+    environment:
+      DEBUG: "*"
     restart: always
     network_mode: host
     ports:
@@ -15,6 +17,8 @@ services:
     build:
       context: network
     command: ["./docker-entrypoint.sh", "grape --dp 20002 --aph 40001 --bn 'grape-01:20001,grape-03:20003'"]
+    environment:
+      DEBUG: "*"
     restart: always
     network_mode: host
     ports:
@@ -25,6 +29,8 @@ services:
     build:
       context: network
     command: ["./docker-entrypoint.sh", "grape --dp 20003 --aph 50001 --bn 'grape-01:20001,grape-02:20002'"]
+    environment:
+      DEBUG: "*"
     restart: always
     network_mode: host
     ports:
@@ -50,21 +56,3 @@ services:
       - grape-01
       - grape-02
       - grape-03
-
-  client:
-    build:
-      context: client
-      args:
-        - NODE_ENV=development
-    command: ["make", "dev_client"]
-    restart: always
-    network_mode: host
-    volumes:
-      - /opt/node_modules
-      - ./client:/opt
-    ports:
-      - 9228:9229
-    env_file:
-      - ./envs/client.env
-    # depends_on:
-    #   - server
