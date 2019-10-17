@@ -1,5 +1,5 @@
 const peer = require('./GetPeerConnection')
-const app = require('./../../../lib')
+const logger = require('./../../../lib/logger')
 
 const sendBid = (clientId, offerId) => {
   const payload = { type: 'bid', offer_id: offerId }
@@ -7,9 +7,9 @@ const sendBid = (clientId, offerId) => {
 
   peer.request(clientId, payload, opts, (error, result) => {
     if (error) {
-      return app.logger.error(error)
+      return logger.error(error)
     }
-    app.logger.info(result)
+    logger.info(result)
   })
 }
 

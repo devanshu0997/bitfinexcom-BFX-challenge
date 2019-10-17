@@ -1,5 +1,5 @@
 const _ = require('lodash')
-const app = require('./../../lib')
+const logger = require('./../../lib/logger')
 const link = require('../util/link')
 const Offer = require('./../models/Offer')
 const { announce } = require('./../util/announce')
@@ -59,9 +59,9 @@ class BidController {
 
         OffersKeyList.removeKey(payload.offer_id)
 
-        app.logger.info('An Order Processed Successfully!')
-        app.logger.info(`Order Id: ${offer.id}, DHT Hash: ${hash}`)
-        app.logger.info('Announcing in Network about successful bid')
+        logger.info('An Order Processed Successfully!')
+        logger.info(`Order Id: ${offer.id}, DHT Hash: ${hash}`)
+        logger.info('Announcing in Network about successful bid')
 
         announce(`REMOVE_OFFER:${hash}`, () => { })
 
